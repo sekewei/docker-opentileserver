@@ -2,7 +2,8 @@ FROM ubuntu:14.04
 RUN apt-get -y update
 
 # default value for PBF_URL
-ARG PBF_URL=http://download.geofabrik.de/europe/andorra-latest.osm.pbf 
+#ARG PBF_URL=http://download.geofabrik.de/europe/andorra-latest.osm.pbf 
+ARG PBF_URL=http://download.geofabrik.de/asia/taiwan-latest.osm.pbf
 RUN echo 'PBF_URL = ' $PBF_URL
 
 # Install git
@@ -16,6 +17,7 @@ RUN git config --global user.email "docker@nominatim.com"
 RUN git clone https://github.com/MapFig/opentileserver.git
 
 COPY opentileserver.sh /opentileserver/
+COPY reload-opentileserver.sh /opentileserver/
 WORKDIR /opentileserver/
 
 RUN pwd
@@ -28,5 +30,6 @@ RUN chmod 777 opentileserver.sh
 RUN ./opentileserver.sh web bright $PBF_URL 
 
 COPY OSMBright.xml /usr/local/share/maps/style/OSMBright/
+RUN chmod 777 /usr/local/share/maps/style/OSMBright/OSMBright.xml
 
 ENTRYPOINT service postgresql restart && service apache2 start && service renderd restart && bash
