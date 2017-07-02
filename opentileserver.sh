@@ -6,13 +6,14 @@
 #Example for Delaware
 # ./opentileserver.sh web carto http://download.geofabrik.de/north-america/us/delaware-latest.osm.pbf
 
-echo "#	$(date)	You edited this file"
+echo "#	$(date)	Dalibor edited this file"
 apt-get -qq update
 apt-get install bc
 apt-get -qq -y install curl
 
 #To run in non-Latin language uncomment below
 #export LC_ALL=C
+
 
 WEB_MODE="${1}"         #web,ssl
 OSM_STYLE="${2}"	#bright, carto
@@ -228,15 +229,16 @@ else
 	if [ $? -eq 1 ]; then	echo "Error: Can't alter osm user.";		exit 1;	fi
 fi
 
+psql -Upostgres -c "DROP DATABASE IF EXISTS ${OSM_DB};"
 if [ $(psql -Upostgres -c "select datname from pg_database" | grep -m 1 -c ${OSM_DB}) -eq 0 ]; then
-	psql -Upostgres -c "create database ${OSM_DB} owner=${OSM_USER};"
+	psql -Upostgres -c "CREATE DATABASE ${OSM_DB} TEMPLATE template0 ENCODING 'UTF8' OWNER ${OSM_USER};"
 	if [ $? -eq 1 ]; then	echo "Error: Can't add osm database.";	exit 1;	fi
 fi
 
 psql -Upostgres ${OSM_DB} <<EOF_CMD
 \c ${OSM_DB}
-CREATE EXTENSION hstore;
-CREATE EXTENSION postgis;
+CREATE EXTENSION IF NOT EXISTS hstore;
+CREATE EXTENSION IF NOT EXISTS postgis;
 ALTER TABLE geometry_columns OWNER TO ${OSM_USER};
 ALTER TABLE spatial_ref_sys OWNER TO ${OSM_USER};
 EOF_CMD
@@ -343,7 +345,7 @@ fi
 echo "########################################### Download html pages"
 rm /var/www/html/index.html
 for p in openlayers-example leaflet-example index; do
-	wget -P/var/www/html/ https://cdn.acugis.com/osm-assets/htmls/${p}.html
+	wget --no-check-certificate -P/var/www/html/ https://cdn.acugis.com/osm-assets/htmls/${p}.html
 done
 
 sed -i.save "s|localhost|$(hostname -I | tr -d ' ')|" /var/www/html/leaflet-example.html
