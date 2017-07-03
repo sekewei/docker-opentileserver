@@ -2,10 +2,15 @@
 =======================
 
 ### Build docker image for specific region:
-docker build -t dmakan/ubuntu-opentileserver . --build-arg PBF_URL=http://download.geofabrik.de/europe/serbia-latest.osm.pbf
+# docker build -t dmakan/ubuntu-opentileserver . --build-arg PBF_URL=http://download.geofabrik.de/europe/serbia-latest.osm.pbf
+docker build   -f ./Dockerfile   -t taiwan-osmbright:latest   -    <    taiwan-osmbright_v1_build.tar.gz
 
 ### Run docker container:
-docker run -t -i -p 80:80 dmakan/ubuntu-opentileserver
+# docker run -t -i -p 80:80 dmakan/ubuntu-opentileserver
+docker run -it -p 80:80 --name taiwan taiwan-osmbright:latest
+
+### Look into docker container:   (use Ctrl-p q for escape)
+docker exec -it  taiwan bash
 
 ### Example calls (from the host):
 http://localhost/openlayers-example.html
