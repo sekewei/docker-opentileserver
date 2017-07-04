@@ -12,3 +12,6 @@ docker exec -it  taiwan bash
 
 ### Example calls (from the host):
 http://localhost/openlayers-example.html
+
+### Consult the revision documentation
+https://seke-blog.blogspot.tw/2017/04/how-to-build-osm-map-server-for-taiwan.html
