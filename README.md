@@ -7,7 +7,7 @@ docker build   -f ./Dockerfile   -t taiwan-osmbright:latest   -    <    taiwan-o
 ### Run docker container:
 docker run -it -p 80:80 --name taiwan taiwan-osmbright:latest
 
-### Look into docker container:   (use Ctrl-p q for escape)
+### Look into docker container:   (use Ctrl-p + Ctrl-q for escape)
 docker exec -it  taiwan bash
 
 ### Example calls (from the host):
