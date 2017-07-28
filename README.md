@@ -1,5 +1,4 @@
 # docker-opentileserver
-=======================
 
 ## Build docker image for specific region:
 `docker build   -f ./Dockerfile   -t taiwan-osmbright:latest   -    <    taiwan-osmbright_v1_build.tar.gz`
