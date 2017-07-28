@@ -5,10 +5,12 @@
 docker build   -f ./Dockerfile   -t taiwan-osmbright:latest   -    <    taiwan-osmbright_v1_build.tar.gz
 
 ### Run docker container:
-docker run -it -p 80:80 --name taiwan taiwan-osmbright:latest
+docker run -it -p 80:80 --name twbright taiwan-osmbright:latest
 
-### Look into docker container:   (use Ctrl-p + Ctrl-q for escape)
-docker exec -it  taiwan bash
+### Update new map data:   (use Ctrl-p + Ctrl-q for escape)
+docker exec -it  twbright /bin/bash
+cd /opentileserver
+sh ./reload-opentileserver.sh
 
 ### Example calls (from the host):
 http://localhost/openlayers-example.html
