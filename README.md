@@ -1,5 +1,11 @@
 # docker-opentileserver
 
+## Download source files for building the docker image:
+```
+git clone git@github.com:sekewei/docker-opentileserver.git
+cd docker-optenfileserver
+```
+
 ## Build docker image for specific region:
 `docker build   -f ./Dockerfile   -t taiwan-osmbright:latest   -    <    taiwan-osmbright_v1_build.tar.gz`
 
